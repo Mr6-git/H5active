@@ -1,0 +1,117 @@
+/* colors
+-------------------------- */
+$color-primary: rgba(6, 126, 231, 1) !default;
+$color-dark: #1a1a1a !default;
+$color-dark3: #333 !default;
+$color-dark2: #666 !default;
+$color-light: #999 !default;
+$border-color: #e8e8e8 !default;
+$color-orange: rgba(255, 102, 0, 1) !default;
+$color-green: #09ba07 !default;
+
+/* button-colors
+-------------------------- */
+$btn-active: rgba(6, 126, 231, 1) !default;
+$btn-disabled: #CCC !default;
+
+$btn-disabled-1: mix(#fff, $btn-active, 70%) !default;
+/* 53a8ff */
+
+/* background-colors
+-------------------------- */
+$bg-color-base: #fff !default;
+$bg-color-light : #f5f5f5 !default; //页面浅灰背景&图片浅灰背景
+$bg-color-danger: #F9EFEF !default; //页面浅红背景&按钮边框
+$bg-color-panel: #DAECFB !default;
+$bg-color-active: #ff9c50 !default;
+
+/* tag-colors
+-------------------------- */
+$tag-primary:#D87182 !default;
+$tag-dark:#555 !default;
+
+$para: 100px;
+
+$max-width: 550px;
+/* methods
+-------------------------- */
+// 背景图片地址和大小
+@mixin bg($url) {
+	background: url($url) no-repeat;
+	background-size: 100% 100%;
+}
+
+// 定位上下左右居中
+@mixin center {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+// 定位上下居中
+@mixin ct {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+// 定位左右居中
+@mixin cl {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+// 宽高
+@mixin wh($width, $height) {
+	width: $width;
+	height: $height;
+}
+
+// 字体大小，颜色
+@mixin sc($size, $color) {
+	font-size: $size;
+	color: $color;
+}
+
+// flex 布局和 子元素 对其方式
+@mixin fj($align: center, $type: space-between) {
+	display: flex;
+	align-items: $align;
+	justify-content: $type;
+}
+
+// px -> rem
+@function px2rem ($value) {
+	// @return $value / $para + rem;
+	@if (type-of($value) == list) {
+		@return getRemList($value);
+	}
+	@return getRem($value);
+}
+
+@function getRem($var) {
+	@if (unit($var) == 'px') {
+	  	@if (abs($var) == 1) {@return $var;}
+	  	@return ($var / $para) * 1rem;
+	}
+	@return $var;
+}
+
+@function getRemList($list) {
+	$str: ();
+	@each $v in $list {
+		$str: append($str, getRem($v));
+	}
+	@return $str;
+}
+
+@mixin font-size($target){
+    font-size: ($target / $para) * 1rem;
+}
+
+@function px2rem2 ($value) {
+    $para: 75px;
+    @return $value / $para + rem;
+}

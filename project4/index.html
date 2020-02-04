@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width">
+	<title>锦鲤赛事</title>
+
+	<script src="./static/js/taro.js"></script>
+	<script src="./static/js/jquery-3.4.1.min.js"></script>
+	<script src="./static/layer/layer.js"></script>
+	<script src="./static/js/clipboard.min.js"></script>
+	<style>
+		* {
+			padding: 0;
+			margin: 0;
+		}
+
+		html,
+		body {
+			line-height: 1.5;
+			color: #333;
+			font-size: 0.7rem;
+			-webkit-overflow-scrolling: touch;
+			padding: 0;
+			margin: 0;
+			font-family: '微软雅黑'
+		}
+
+		a {
+			text-decoration: none;
+			color: none;
+		}
+
+		li,
+		ol,
+		ul {
+			list-style: none;
+		}
+
+		img,
+		input,
+		select,
+		textarea {
+			border: none;
+			vertical-align: middle;
+		}
+
+		input:-ms-input-placeholder {
+			color: #616ED6;
+		}
+
+		input::-webkit-input-placeholder {
+			color: #616ED6;
+		}
+
+		input,
+		select,
+		textarea {
+			outline: none;
+			border: 0;
+			color: #666;
+			background: 0 0;
+		}
+
+		.main {
+			position: relative;
+			overflow-x: hidden;
+			width: 550px;
+			margin: 0 auto;
+			min-height: 100vh;
+			background: #fff;
+		}
+
+		.one_pic {
+			width: 550px;
+			height: 515px;
+		}
+
+		.two_pic {
+			width: 550px;
+			height: 464px;
+		}
+
+		.thr_pic {
+			width: 550px;
+			height: 1107px;
+		}
+
+		.four_pic {
+			width: 550px;
+			height: 1641px;
+			margin: 11px 0 127px 0;
+		}
+
+		.bottom {
+			position: fixed;
+			width: 550px;
+			height: 117px;
+			background: rgba(51, 51, 51, 1);
+			bottom: 0;
+		}
+
+		.bottom .wechat_content {
+			position: relative;
+			width: 50%;
+			height: 100%;
+			float: left;
+		}
+
+		.bottom .wechat_content .wechat_logo {
+			position: absolute;
+			width: 36px;
+			height: 36px;
+			top: 39px;
+			left: 34px;
+		}
+
+		.bottom .wechat_content .w_span {
+			position: absolute;
+			display: inline-block;
+			font-size: 15px;
+			color: rgba(255, 255, 255, 1);
+			left: 86px;
+			top: 32px;
+		}
+
+		.bottom .wechat_content .w_num_one,
+		.bottom .wechat_content .w_num_two {
+			position: absolute;
+			display: inline-block;
+			width: 99px;
+			font-size: 15px;
+			word-wrap: break-word;
+			color: rgba(255, 255, 255, 1);
+			left: 86px;
+			top: 55px;
+		}
+
+		#w_btn_one,
+		#w_btn_two {
+			position: absolute;
+			width: 59px;
+			height: 22px;
+			background: #fff;
+			line-height: 22px;
+			text-align: center;
+			font-size: 12px;
+			color: rgba(51, 51, 51, 1);
+			left: 204px;
+			top: 51px;
+			cursor: pointer;
+		}
+
+		.wechat_left {
+			position: absolute;
+			background: url(./static/images/wechat_bg.png);
+			background-size: cover;
+			background-repeat: no-repeat;
+			width: 188px;
+			height: 188px;
+			top: 703px;
+			left: 54px;
+		}
+
+		.wechat_left .RQcode_left {
+			width: 100%;
+			height: 100%;
+		}
+
+		.wechat_right {
+			position: absolute;
+			background: url(./static/images/wechat_bg.png);
+			background-size: cover;
+			background-repeat: no-repeat;
+			width: 188px;
+			height: 188px;
+			top: 703px;
+			right: 54px;
+		}
+
+		.wechat_right .RQcode_right {
+			width: 100%;
+			height: 100%;
+		}
+
+		.w_l_text {
+			width: 150px;
+			font-size: 18px;
+			color: #fff;
+			margin: 14px 0 0 18px;
+		}
+
+		.wx_gif {
+			position: fixed;
+			width: 88px;
+			height: 88px;
+			top: 200px;
+			right: 20px;
+		}
+
+		.shade {
+			position: fixed;
+			display: none;
+			width: 550px;
+			margin: 0 auto;
+			background: rgba(0, 0, 0, .7);
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+		}
+
+		.shade .popup {
+			position: relative;
+			background: url(./static/images/popup.png);
+			background-size: cover;
+			background-repeat: no-repeat;
+			width: 400px;
+			height: 400px;
+			margin: 250px auto;
+		}
+
+		.shade .popup .close {
+			position: absolute;
+			width: 178px;
+			height: 57px;
+			top: 312px;
+			left: 31px;
+		}
+
+		.shade .popup .Invite {
+			position: absolute;
+			width: 170px;
+			height: 57px;
+			top: 312px;
+			left: 209px;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="main">
+		<div class="wechat_left">
+			<img src="" alt="" class="RQcode_left" />
+			<p class="w_l_text"></p>
+		</div>
+		<div class="wechat_right">
+			<img src="" alt="" class="RQcode_right" />
+			<p class="w_l_text"></p>
+		</div>
+		<img src="./static/images/wx.gif" alt="" class="wx_gif" />
+		<img class="one_pic" src="./static/images/bg_1.png" alt="" />
+		<img class="two_pic" src="./static/images/bg_2.png" alt="" />
+		<img class="thr_pic" src="./static/images/bg_3.png" alt="" />
+		<img class="four_pic" src="./static/images/bg_4.png" alt="" />
+		<div class="bottom">
+			<div class="wechat_content">
+				<img class="wechat_logo" src="./static/images/wechat_logo.png" alt="" />
+				<span class="w_span">微信号</span>
+				<span class="w_num_one"></span>
+				<div id="w_btn_one">添加微信</div>
+			</div>
+			<div class="wechat_content">
+				<img class="wechat_logo" src="./static/images/wechat_logo.png" alt="" />
+				<span class="w_span">微信号</span>
+				<span class="w_num_two"></span>
+				<div id="w_btn_two">添加微信</div>
+			</div>
+		</div>
+	</div>
+	<div class="shade">
+		<div class="popup">
+			<div class="close"></div>
+			<a href="weixin://">
+				<div class="Invite"></div>
+		</div>
+	</div>
+	<script>
+
+		var inviteCode = getParams('invite');
+		// var basicURL = 'http://dev-api.awtio.com'; // 测试环境接口访问
+		var basicURL = 'https://api.awtio.com'; // 正式环境接口访问
+
+		// var basicOldURL = 'http://spm.ifarms.cn'; // 测试环境 老接口
+		var basicOldURL = 'https://events.jinlibet.com'; // 正式环境 老接口
+
+		var getWechatURL = basicOldURL + "/webapi/utils/Promotion/RaffleWechat";
+		var copyWechatURL = basicOldURL + "/webapi/utils/Promotion/RaffleWechatCopy";
+
+		var subCodeURL = basicURL + "/base/security/SMSSend"; // 获取验证码接口
+		var subPostURL = basicURL + "/base/user/Reg"; // 注册接口
+
+		// 正式
+		var AppKey = '43a58de05457647be46cf5ee';
+		var ServicerId = '1145874434909802496';
+
+		// 测试
+		// var AppKey = '64a080de0cbad36ab607f5d6';
+		// var ServicerId = '1134625846519140352';
+		var shade = $('.shade'),
+			close = $('.shade .popup .close ');
+		var clipboard1 = new ClipboardJS('.wechat_content');
+		clipboard1.on('success', function (e) {
+			shade.fadeIn(200);
+			e.clearSelection();//清除复制后文字的选中状态
+		});
+
+		clipboard1.on('error', function (e) {
+			layer.msg('复制失败');
+		});
+
+		var clipboard2 = new ClipboardJS('.wechat_content');
+		clipboard2.on('success', function (e) {
+			shade.fadeIn(200);
+			e.clearSelection();//清除复制后文字的选中状态
+		});
+
+		clipboard2.on('error', function (e) {
+			layer.msg('复制失败');
+		});
+
+		var clipboard3 = new ClipboardJS('.wx_gif');
+		clipboard3.on('success', function (e) {
+			shade.fadeIn(200);
+			e.clearSelection();//清除复制后文字的选中状态
+		});
+
+		clipboard3.on('error', function (e) {
+			layer.msg('复制失败');
+		});
+
+		close.click(function () {
+			shade.fadeOut(200);
+		})
+
+		// 获取微信号
+		function getWechat(type) {
+			var guid = localStorage.getItem('guid');
+			if (guid == null || guid == undefined) {
+				guid = newGuid();
+			}
+			// alert(guid)
+			console.log(guid)
+			$.ajax({
+				type: 'post',
+				url: getWechatURL,
+				dataType: 'json',
+				contentType: 'application/json;charset=utf-8',
+				processData: false,
+				data: JSON.stringify({
+					ctx: {
+						"uid": "",
+						"token": "",
+						"once_str": "",
+						"flag": "{\"app_version\":\"1.06.0611\",\"imei\":\"\",\"source\":\"3\",\"model\":\"web\",\"bundle_id\":\"com.jinlibet.events\"}"
+					},
+					channel: '2',
+					invite: inviteCode,
+					guid: guid + ''
+				}),
+				success: function (res) {
+					if (res.status == '200') {
+						if (type == '1') {
+							$('.bottom .wechat_content .w_num_one').html(res.data.wx);
+							$('.w_l_text').eq(0).html(`微信号：${res.data.wx}`);
+							$('.wechat_content').eq(0).attr('data-clipboard-text', res.data.wx);
+							$('.wx_gif').attr('data-clipboard-text', res.data.wx);
+							$('.wechat_left .RQcode_left').attr('src', res.data.icon);
+						} else {
+							$('.bottom .wechat_content .w_num_two').html(res.data.wx);
+							$('.w_l_text').eq(1).html(`微信号：${res.data.wx}`);
+							$('.wechat_content').eq(1).attr('data-clipboard-text', res.data.wx);
+							$('.wx_gif').attr('data-clipboard-text', res.data.wx);
+							$('.wechat_right .RQcode_right').attr('src', res.data.icon);
+						}
+					}
+				},
+				error: function (XMLHttpRequest, textStatus, errorThrown) {
+					layer.open({
+						content: '请求服务器超时'
+						, skin: 'msg'
+						, time: 2 //2秒后自动关闭
+					});
+				},
+			});
+		}
+
+		getWechat('1');
+		getWechat('2');
+
+		function getParams(name) {
+			var query = window.location.search.substring(1);
+			var vars = query.split("&");
+			for (var i = 0; i < vars.length; i++) {
+				var pair = vars[i].split("=");
+				if (pair[0] === name) {
+					return pair[1]
+				}
+			}
+			return null;
+		}
+
+		function newGuid() {
+			var guid = "";
+			for (var i = 1; i <= 32; i++) {
+				var n = Math.floor(Math.random() * 16.0).toString(16);
+				guid += n;
+				if ((i == 8) || (i == 12) || (i == 16) || (i == 20))
+					guid += "-";
+			}
+			return guid;
+		}
+	</script>
+</body>
+
+</html>

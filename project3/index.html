@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width">
+	<title>热点资讯</title>
+
+	<script src="./static/js/taro.js"></script>
+	<script src="./static/js/jquery-3.4.1.min.js"></script>
+	<style>
+		* {
+			padding: 0;
+			margin: 0;
+		}
+
+		html,
+		body {
+			line-height: 1.5;
+			color: #333;
+			font-size: 0.7rem;
+			-webkit-overflow-scrolling: touch;
+			padding: 0;
+			margin: 0;
+			font-family: '微软雅黑'
+		}
+
+		a {
+			text-decoration: none;
+			color: none;
+		}
+
+		li,
+		ol,
+		ul {
+			list-style: none;
+		}
+
+		img,
+		input,
+		select,
+		textarea {
+			border: none;
+			vertical-align: middle;
+		}
+
+		input:-ms-input-placeholder {
+			color: #616ED6;
+		}
+
+		input::-webkit-input-placeholder {
+			color: #616ED6;
+		}
+
+		input,
+		select,
+		textarea {
+			outline: none;
+			border: 0;
+			color: #666;
+			background: 0 0;
+		}
+
+		.main {
+			position: relative;
+			overflow-x: hidden;
+			width: 550px;
+			margin: 0 auto;
+			min-height: 100vh;
+			background: #F5F5F5;
+		}
+
+		.main .banner {
+			width: 100%;
+			height: 245px;
+			background: url(./static/images/Bitmap.jpg);
+			background-size: cover;
+			background-repeat: no-repeat;
+		}
+
+		.main .infoList {
+			width: 100%;
+			margin-top: 15px;
+			height: auto;
+			background: #fff;
+		}
+
+		.main .infoList ul.info_ul {
+			height: calc(100%-260px);
+		}
+
+		.main .infoList ul li {
+			position: relative;
+			width: 550px;
+			min-height: 147px;
+			border-bottom: 1px solid #F5F5F5;
+			overflow: hidden;
+			cursor: pointer;
+		}
+
+		.info_li p.title {
+			margin: 14px 0 0 22px;
+			width: 327px;
+			font-size: 22px;
+			line-height: 31px;
+			color: #000000;
+		}
+
+		.info_li .li_pic {
+			position: absolute;
+			float: right;
+			width: 156px;
+			height: 117px;
+			top: 14px;
+			right: 22px;
+			border-radius: 7px;
+		}
+
+		.info_li .li_source {
+			display: inline-block;
+			margin: 32px 0 13px 22px;
+			font-size: 16px;
+			font-weight: 400;
+			color: rgba(120, 128, 144, 1);
+			line-height: 23px;
+		}
+
+		.stick_li {
+			padding: 15px 22px 0 22px;
+			display: inline-block;
+		}
+
+		.stick_li .title {
+			width: 520px;
+			font-size: 26px;
+			color: rgba(26, 26, 26, 1);
+			line-height: 37px;
+		}
+
+		.stick_li .li_source {
+			margin-top: 32px;
+			font-size: 21px;
+			font-weight: 400;
+			color: rgba(120, 128, 144, 1);
+			line-height: 23px;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="main">
+		<div class="banner"></div>
+		<div class="infoList">
+			<ul class="info_ul">
+			</ul>
+		</div>
+	</div>
+	<script>
+		var // basicURL = 'https://api.awtio.com', // 正式环境接口访问
+			basicURL = 'http://dev-api.awtio.com', // 测试环境接口访问
+			AppKey = '43a58de05457647be46cf5ee',
+			ServicerId = '1134625846519140352';
+		var infoUl = document.getElementsByClassName('info_ul')[0];
+		function getData() {
+			var infoData = [];
+			$.ajax({
+				type: 'get',
+				url: `${basicURL}/media/article/GetList?has_link=1&assort=2`,
+				dataType: 'json',
+				contentType: 'application/json;charset=utf-8',
+				processData: false,
+				data: {},
+				beforeSend: function (request) {
+					request.setRequestHeader("App-Key", AppKey);
+					request.setRequestHeader("Servicer-ID", ServicerId);
+					request.setRequestHeader("Bundle-ID", "com.awtio.h5");
+					request.setRequestHeader("Version", "1.0");
+					// request.setRequestHeader("Channel-ID", channelCode);
+				},
+				success: (res) => {
+					res.data.map(item => {	//循环置顶
+						var aLi = document.createElement('li'),
+							time = timestampToTime(item.create_time);
+						if (item.is_top == 1) {
+							aLi.className = "stick_li";
+							aLi.innerHTML = `<a href=${item.url}><p class="title">${item.title}</p><div class="li_source"><span style="color:rgba(227,74,68,1);margin-right: 15px">置顶</span><span>${item.source}</span><span style="margin-left: 15px">${time}</span></div></a>`;
+							infoUl.appendChild(aLi);
+						}
+					})
+					res.data.map(item => {
+						var aLi = document.createElement('li'),
+							time = timestampToTime(item.create_time);
+						if (item.is_top != 1) {
+							aLi.className = "info_li";
+							aLi.innerHTML = `<a href=${item.url}><p class="title">${item.title}</p><img class="li_pic" src="${item.images[0]}" alt="" /><div class="li_source"><span>${item.source}</span><span style="margin-left: 30px">${time}</span></div></a>`;
+							infoUl.appendChild(aLi);
+						}
+
+					})
+				},
+				error: function () {
+				},
+			})
+		}
+
+		getData();
+
+		function timestampToTime(time) {
+			var date = new Date(time * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+			var Y = date.getFullYear() + '-';
+			var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+			var D = date.getDate() + ' ';
+			var h = date.getHours() + ':';
+			var m = date.getMinutes() + ':';
+			var s = date.getSeconds();
+			return Y + M + D + h + m + s;
+		}
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>完成</title>
+	<script src="./static/js/taro.js"></script>
+	<script src="./static/js/jquery-3.4.1.min.js"></script>
+	<script src="./static/layer/layer.js"></script>
+	<style>
+		* {
+			padding: 0;
+			margin: 0;
+		}
+
+		html,
+		body {
+			line-height: 1.5;
+			color: #333;
+			font-size: 0.7rem;
+			-webkit-overflow-scrolling: touch;
+			padding: 0;
+			margin: 0;
+			font-family: '微软雅黑'
+		}
+
+		li,
+		ol,
+		ul {
+			list-style: none;
+		}
+
+		img,
+		input,
+		select,
+		textarea {
+			border: none;
+			vertical-align: middle;
+		}
+
+		input:-ms-input-placeholder {
+			color: rgba(185, 185, 185, 1);
+		}
+
+		input::-webkit-input-placeholder {
+			color: rgba(185, 185, 185, 1);
+		}
+
+		input,
+		select,
+		textarea {
+			outline: none;
+			border: 0;
+			color: #666;
+			background: 0 0;
+		}
+
+		.main {
+			width: 550px;
+			margin: 0 auto;
+			background: #fff;
+			min-height: 100vh;
+			text-align: center;
+		}
+
+		.success {
+			width: 88px;
+			height: 88px;
+			margin-top: 43px;
+		}
+
+		.text {
+			margin-top: 30px;
+			font-size: 21px;
+			color: rgba(51, 51, 51, 1);
+			line-height: 29px;
+		}
+
+		.btn {
+			width: 456px;
+			height: 62px;
+			background: rgba(243, 125, 90, 1);
+			border-radius: 29px;
+			color: #fff;
+			font-size: 21px;
+			line-height: 62px;
+			text-align: center;
+			margin: 88px 0 0 47px;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="main">
+		<img src="./static/images/success.png" alt="" class="success" />
+		<p class="text">领取成功</p>
+		<p class="text">门票将在2个工作日内邮出，感谢您的参与</p>
+		<div class="btn" onclick="goback()">返回首页</div>
+	</div>
+</body>
+<script>
+	function goback(){
+		window.location.href = './index.html'
+	}
+</script>
+</html>

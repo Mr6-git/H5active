@@ -1,0 +1,133 @@
+@import "../../resource/css/mixin.scss";
+
+li {
+	list-style: none;
+}
+ul {
+	padding: 0;
+	margin: 0;
+}
+$height: 50px;
+.index_warp {
+	@include wh(100%, calc(100% - #{px2rem(73px)}));
+	overflow: hidden;
+	padding: px2rem(23px 23px 0 23px);
+	overflow-y: scroll;
+}
+.index_content {
+	@include wh(100%, calc(100% - #{$height}));
+	overflow-y: scroll;
+	-webkit-overflow-scrolling: touch;
+}
+
+.topPic {
+	width: px2rem(505px);
+	height: px2rem(226px);
+	background: #f60;
+	margin-bottom: px2rem(18px)
+}
+
+.infoList {
+	margin: 0 auto;
+	ul {
+		padding: 0;
+		li {
+			border-bottom: 1px solid #f5f5f5;
+		}
+		li:last-child{
+			border-bottom: none;
+		}
+		.infoLi{
+			position: relative;
+			width: px2rem(500px);
+			min-height: px2rem(135px);
+			.liTitle {
+				width: px2rem(327px);
+				font-size: px2rem(23px);
+				color:rgba(26,26,26,1);
+				line-height:px2rem(31px);
+				margin: px2rem(10px 0 57px 0);
+			}
+			.liPic {
+				position: absolute;
+				top: px2rem(15px);
+				right: 0;
+				width:px2rem(161px);
+				height:px2rem(100px);
+				border-radius:px2rem(3px);
+			}
+			.liTime {
+				position: absolute;
+				bottom: px2rem(12px);
+				font-size: px2rem(16px);
+				color:rgba(161,161,161,1);
+				line-height: px2rem(23px);
+			}
+		}
+		.picLi {
+			width: px2rem(500px);
+			min-height: px2rem(236px);
+			.liTitle {
+				font-size: px2rem(23px);
+				color:rgba(26,26,26,1);
+				line-height:px2rem(31px);
+				padding: px2rem(21px 0 13px 0);
+			}
+			.picList {
+				width: px2rem(160px);
+				height: px2rem(117px);
+				float: left;
+				background:rgba(216,216,216,1);
+				border-radius: px2rem(3px);
+				margin: px2rem(2px 0 15px 6px);
+			}
+			.liTime {
+				font-size: px2rem(16px);
+				color:rgba(161,161,161,1);
+				line-height: px2rem(23px);
+				margin-bottom: px2rem(12px);
+			}
+		}
+		.videoLi {
+			width: px2rem(500px);
+			min-height: px2rem(418px);
+			.liTitle {
+				font-size: px2rem(23px);
+				color:rgba(26,26,26,1);
+				line-height:px2rem(31px);
+				padding: px2rem(21px 0 13px 0);
+			}
+			.video {
+				width: px2rem(505px);
+				height: px2rem(296px);
+				border-radius: px2rem(3px);
+				margin: px2rem(2px 0 15px 0);
+				background: #1A1A1A;
+			}
+			.liTime {
+				font-size: px2rem(16px);
+				color:rgba(161,161,161,1);
+				line-height: px2rem(23px);
+			}
+		}
+		.stickLi {
+			position: relative;
+			width: px2rem(500px);
+			min-height: px2rem(135px);
+			.liTitle {
+				width: px2rem(500px);
+				font-size: px2rem(26px);
+				color:rgba(26,26,26,1);
+				line-height:px2rem(31px);
+				margin: px2rem(10px 0 57px 0);
+			}
+			.liTime {
+				position: absolute;
+				bottom: px2rem(12px);
+				font-size: px2rem(21px);
+				color:rgba(161,161,161,1);
+				line-height: px2rem(23px);
+			}
+		}
+	}
+}

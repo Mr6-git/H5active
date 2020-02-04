@@ -1,0 +1,117 @@
+@import "../../resource/css/mixin.scss";
+
+li {
+	list-style: none;
+}
+$height: 50px;
+.index_warp {
+	@include wh(100%, calc(100% - #{px2rem(73px)}));
+	overflow: hidden;
+	overflow-y: scroll;
+}
+.index_content {
+	@include wh(100%, calc(100% - #{$height}));
+	overflow-y: scroll;
+	-webkit-overflow-scrolling: touch;
+}
+
+.infoList {
+	display: flex;
+	// justify-content: space-around;
+	flex-wrap: wrap;
+	width: 100%;
+	ul {
+		padding: 0;
+		margin: 0;
+		li {
+			width: px2rem(240px);
+			margin: px2rem(15px 0 0 23px);
+			float: left;
+		}
+		.cover {
+			width: px2rem(240px);
+			height: px2rem(136px);
+			border-radius: px2rem(4px);
+		}
+		.picTitle {
+			width: px2rem(240px);
+			font-size: px2rem(22px);
+			color:rgba(26,26,26,1);
+			line-height: px2rem(31px);
+			margin-top: px2rem(7px);
+		}
+		.picCount {
+			width: px2rem(240px);
+			font-size: px2rem(18px);
+			color:rgba(155,155,155,1);
+			line-height: px2rem(25px);
+			margin: px2rem(7px 0 34px 0);
+		}
+		.picList {
+
+		}
+	}
+}
+
+.picList {
+	display: flex;
+	// justify-content: space-around;
+	flex-wrap: wrap;
+	width: 100%;
+	ul {
+		padding: px2rem(20px);
+		margin: 0;
+		li {
+			width: px2rem(163px);
+			height: px2rem(141px);
+			margin: px2rem(9px 0 0 7px);
+			border-radius: px2rem(4px);
+			overflow: hidden;
+			float: left;
+			.liImg {
+				width: px2rem(163px);
+				height: px2rem(141px);
+			}
+		}
+	}
+}
+
+.drawer {
+	position: fixed;
+	top: 100vh;
+	width: 100vh;
+	height: 100vh;
+	background: #1A1A1A;
+	z-index: 99;
+	transform: translate(0, -100vh);
+	transition: all 0.4s;
+	visibility: hidden;
+	opacity: 0;
+	.imgA {
+		display: inline-block;
+		width: px2rem(503px);
+		height: px2rem(414px);
+		margin: px2rem(282px 0 0 23px);
+	}
+	
+	.detailImg {
+		width: px2rem(503px);
+		height: px2rem(414px);
+	}
+}
+
+.open {
+	visibility: visible;
+	opacity: 1;
+	transform: translate(0, -100vh);
+}
+
+// .my_drawer .am-drawer-sidebar {
+// 	background-color: #fff;
+// 	overflow: auto;
+// 	-webkit-overflow-scrolling: touch;
+// }
+// .my_drawer .am-drawer-sidebar .am-list {
+// 	width: 300px;
+// 	padding: 0;
+// }

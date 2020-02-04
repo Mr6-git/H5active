@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>东方擂</title>
+
+	<script src="./static/js/taro.js"></script>
+	<script src="./static/js/jquery-3.4.1.min.js"></script>
+	<script src="./static/layer/layer.js"></script>
+	<link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.3/style/weui.min.css">
+	<link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.2.1/css/jquery-weui.min.css">
+	<script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/jquery-weui/1.2.1/js/jquery-weui.min.js"></script>
+	<script src="https://cdn.bootcss.com/jquery-weui/1.2.1/js/swiper.min.js"></script>
+	<script src="https://cdn.bootcss.com/jquery-weui/1.2.1/js/city-picker.min.js"></script>
+	<style>
+		* {
+			padding: 0;
+			margin: 0;
+		}
+
+		html,
+		body {
+			line-height: 1.5;
+			color: #333;
+			font-size: 0.7rem;
+			-webkit-overflow-scrolling: touch;
+			padding: 0;
+			margin: 0;
+			font-family: '微软雅黑'
+		}
+
+		li,
+		ol,
+		ul {
+			list-style: none;
+		}
+
+		img,
+		input,
+		select,
+		textarea {
+			border: none;
+			vertical-align: middle;
+		}
+
+		input:-ms-input-placeholder {
+			color: rgba(185, 185, 185, 1);
+		}
+
+		input::-webkit-input-placeholder {
+			color: rgba(185, 185, 185, 1);
+		}
+
+		input,
+		select,
+		textarea {
+			outline: none;
+			border: 0;
+			color: #666;
+			background: 0 0;
+		}
+
+		.main {
+			width: 550px;
+			margin: 0 auto;
+			background: #fff;
+			min-height: 100vh;
+		}
+
+		.banner {
+			width: 100%;
+			height: 132px;
+		}
+
+		.content {
+			padding: 0 46px 46px 46px;
+		}
+
+		.infoTicket {
+			margin-right: 30px;
+		}
+
+		.info {
+			position: relative;
+			height: 73px;
+			width: 100%;
+			line-height: 90px;
+			font-size: 21px;
+			border-bottom: 1px solid #DDD;
+		}
+
+		.set {
+			position: absolute;
+			width: 24px;
+			height: 24px;
+			right: 88px;
+			top: 32px
+		}
+
+		.setText {
+			position: absolute;
+			color: rgba(243, 125, 90, 1);
+			right: 10px;
+			top: 0;
+		}
+
+		.inputList {
+			height: 73px;
+			width: 100%;
+			border-bottom: 1px solid #DDD;
+			position: relative;
+		}
+
+		.icon {
+			position: absolute;
+			width: 30px;
+			height: 30px;
+			bottom: 22px;
+		}
+
+		.Input {
+			position: absolute;
+			left: 30px;
+			text-indent: 20px;
+			height: 73px;
+			width: calc(100% - 30px);
+			border: none;
+			text-decoration: none;
+			font-size: 21px;
+		}
+
+		#time {
+			position: absolute;
+			left: 30px;
+			text-indent: 20px;
+			height: 73px;
+			width: calc(100% - 30px);
+			border: none;
+			text-decoration: none;
+			font-size: 21px;
+		}
+
+		.InputCode {
+			position: absolute;
+			left: 30px;
+			text-indent: 20px;
+			height: 73px;
+			width: calc(100% - 200px);
+			border: none;
+			text-decoration: none;
+			font-size: 21px;
+		}
+
+		.getCode {
+			position: absolute;
+			width: 154px;
+			height: 53px;
+			border-radius: 3px;
+			border: 1px solid rgba(237, 55, 0, 1);
+			right: 0;
+			top: 11px;
+			color: rgba(237, 55, 0, 1);
+			line-height: 53px;
+			text-align: center;
+			font-size: 21px;
+			cursor: pointer;
+		}
+
+		.btn {
+			width: 183px;
+			height: 76px;
+			background: rgba(204, 204, 204, 1);
+			line-height: 76px;
+			text-align: center;
+			font-size: 21px;
+			color: #fff;
+			float: right;
+		}
+
+		.btn-yes {
+			background: rgba(243, 125, 90, 1);
+		}
+
+		.bottom {
+			position: fixed;
+			width: 550px;
+			/* margin: 0 auto; */
+			height: 76px;
+			line-height: 76px;
+			left: 50%;
+			margin-left: -275px;
+			bottom: 0;
+			background: #fff;
+			border-top: 1px solid rgba(187, 187, 187, 0.64);
+		}
+
+		.bottom .b_text {
+			font-size: 21px;
+			margin-left: 23px;
+			color: rgba(51, 51, 51, 1);
+		}
+
+		.popup {
+			position: fixed;
+			display: none;
+			width: 550px;
+			margin: 0 auto;
+			background: rgba(0, 0, 0, .5);
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+		}
+
+		.set_Popup {
+			/* position: relative; */
+			position: fixed;
+			display: none;
+			bottom: 0;
+			height: 808px;
+			width: 550px;
+			animation: animation 0.2s;
+			animation-fill-mode: forwards;
+			/*当动画完成时，动画会停留在最后一帧。*/
+		}
+
+		.popup_content {
+			position: relative;
+			z-index: 88;
+		}
+
+		.payPopup {
+			position: fixed;
+			display: none;
+			background: #fff;
+			bottom: -440px;
+			left: 50%;
+			margin-left: -275px;
+			border-radius: 18px 18px 0px 0px;
+			min-height: 300px;
+			width: 550px;
+			animation: animation_pay 0.2s ease-in-out;
+			animation-fill-mode: forwards;
+		}
+
+		.payPopup .payTop {
+			width: 100%;
+			height: 82px;
+			line-height: 82px;
+			text-align: center;
+			font-weight: 500;
+			color: rgba(74, 74, 74, 1);
+			font-size: 26px;
+			border-bottom: 1px solid #eee;
+		}
+
+		.payPopup ul li.pay_li {
+			position: relative;
+			width: 100%;
+			height: 100px;
+			border-bottom: 1px solid #eee;
+		}
+
+		.pay_pic {
+			position: absolute;
+			width: 41px;
+			height: 41px;
+			top: 33px;
+			left: 107px;
+		}
+
+		.radio {
+			position: absolute;
+			width: 25px;
+			height: 25px;
+			top: 40px;
+			left: 54px;
+		}
+
+		.pay_li_text {
+			position: absolute;
+			font-size: 26px;
+			line-height: 100px;
+			color: rgba(74, 74, 74, 1);
+			left: 163px;
+		}
+
+		.payPopup .btn_yes {
+			width: 506px;
+			height: 76px;
+			background: #F37D5A;
+			font-size: 26px;
+			text-align: center;
+			color: #fff;
+			line-height: 76px;
+			border: none;
+			margin: 60px 0 15px 22px;
+		}
+
+		.payClose {
+			position: absolute;
+			width: 21px;
+			height: 21px;
+			top: 32px;
+			left: 36px;
+			cursor: pointer;
+			z-index: 99;
+		}
+
+		.close {
+			position: absolute;
+			width: 30px;
+			height: 30px;
+			top: 20px;
+			right: 20px;
+			cursor: pointer;
+			z-index: 99;
+		}
+
+		.setPic {
+			height: 808px;
+			width: 550px;
+		}
+
+		@keyframes animation {
+			0% {
+				bottom: -808px;
+			}
+
+			100% {
+				bottom: 0;
+			}
+		}
+
+		@keyframes animation_pay {
+			0% {
+				bottom: -440px;
+			}
+
+			100% {
+				bottom: 0;
+			}
+		}
+	</style>
+	<script>
+		// 百度统计
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?98fe459a7ade76d4b7d536ffa0ef458d";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+
+		// GA统计
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+		gtag('config', 'UA-146062463-1');
+	</script>
+</head>
+
+<body>
+	<div class="main">
+		<div class="banner">
+			<img src="./static/images/banner.png" alt="" class="banner" />
+		</div>
+		<div class="content">
+			<div class="info">
+				<span>票档：<span class="infoTicket">D</span></span>
+				<span>剩余数量：<span class="infoCount"></span></span>
+				<div onclick="setPopup()" style="cursor: pointer">
+					<img src="./static/images/set.png" alt="" class="set" />
+					<span class="setText">座位图</span>
+				</div>
+			</div>
+			<div class="inputList">
+				<img src="./static/images/name.png" alt="" class="icon" />
+				<input type="text" id="name" class="Input" placeholder="请输入真是姓名" AUTOCOMPLETE="off" />
+			</div>
+			<div class="inputList">
+				<img src="./static/images/plane.png" alt="" class="icon" />
+				<input type="text" id="plane" class="Input" placeholder="请填写航班号，例如：HU7808" AUTOCOMPLETE="off" />
+			</div>
+			<div class="inputList">
+				<img src="./static/images/time.png" alt="" class="icon" />
+				<!-- <input type="text" id="plane" class="Input" placeholder="选择出发时间" /> -->
+				<input type="text" class="layui-input" id="time" placeholder="选择出发时间" AUTOCOMPLETE="off" />
+			</div>
+			<div class="inputList">
+				<img src="./static/images/getGoods.png" alt="" class="icon" />
+				<input type="text" id="attr" class="Input" placeholder="填写收件地址，例如：省市区+街道/楼牌号" AUTOCOMPLETE="off" />
+			</div>
+			<div class="inputList">
+				<img src="./static/images/phone.png" alt="" class="icon" />
+				<input type="text" id="phone" class="Input" maxlength="11" placeholder="请输入手机号" AUTOCOMPLETE="off" />
+			</div>
+			<div class="bottom">
+				<span class="b_text">运费：<span style="color: #f60;font-size: 16px">￥</span><span
+						style="color: #f60;font-size: 23px;font-weight: 500">20</span></span>
+				<div class="btn">立即支付</div>
+			</div>
+			<div class="popup">
+				<div class="set_Popup">
+					<div class="popup_content">
+						<img src="./static/images/icon-close.png" alt="" class="close" />
+						<img src="./static/images/setPic.png" alt="" class="setPic" />
+					</div>
+				</div>
+			</div>
+			<div class="payPopup">
+				<div>
+					<div class="payTop">
+						<img src="./static/images/nextpage.png" alt="" class="payClose" />
+						选择支付方式
+					</div>
+					<ul class="pay_ul">
+					</ul>
+					<button class="btn_yes">确定</button>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<script>
+		var nameVal = '',
+			planeval = '',
+			attrval = '',
+			phoneval = '',
+			codeval = '',
+			timeVal = '',
+			checkType = false,
+			inviteCode = getParams('invite'),
+			// channelCode = getParams('channelCode'),
+			basicURL = 'https://api.awtio.com', // 正式环境接口访问
+			// basicURL = 'http://dev-api.awtio.com', // 测试环境接口访问
+			subCodeURL = basicURL + "/base/security/SMSSend", // 获取验证码接口
+			subPostURL = basicURL + "/base/user/Reg", // 注册接口
+			AppKey = '43a58de05457647be46cf5ee',  //正式环境AppKey
+			ServicerId = '1145874434909802496', //正式环境ServicerId
+			// AppKey = '64a080de0cbad36ab607f5d6', //测试环境AppKey
+			// ServicerId = '1134625846519140352', //测试环境ServicerId
+			checkData,
+			radioFlag = 0,
+			order_number;
+		var payUl = document.getElementsByClassName('pay_ul')[0];
+
+		$("#time").datetimePicker({
+			onChange: function (p, values, displayValues) {
+				let date = `${values[0]}-${values[1]}-${values[2]}   ${values[3]}:${values[4]}`;
+				timeVal = date;
+				checkInput();
+			}
+		});
+		function setPopup() {
+			$(".popup").css("display", "block");
+			$(".set_Popup").css("display", "block");
+		}
+		$('.close').click(function () {
+			$(".popup").css("display", "none");
+			$(".set_Popup").css("display", "none");
+		})
+		$('.payClose').click(function () {
+			$(".popup").css("display", "none");
+			$(".payPopup").css("display", "none");
+		})
+		$("#name").bind('input propertychange', function () {
+			nameVal = $("#name").val();
+			checkInput();
+		})
+		$("#plane").bind('input propertychange', function () {
+			planeval = $("#plane").val();
+			checkInput();
+		})
+		$("#phone").bind('input propertychange', function () {
+			phoneval = $("#phone").val();
+			checkInput();
+		})
+		$("#attr").bind('input propertychange', function () {
+			attrval = $("#attr").val();
+			checkInput();
+		})
+		function checkInput() {
+			if (nameVal != '' && planeval != '' && attrval != '' && phoneval != '' && timeVal != '') {
+				checkType = true;
+				$('.btn').addClass('btn-yes')
+			} else {
+				checkType = false;
+				$('.btn').removeClass('btn-yes')
+			}
+		}
+		//提交
+		$('.btn').click(function () {
+			if (checkType) {
+				$(".popup").css("display", "block");
+				$(".payPopup").css("display", "block");
+			}
+		})
+
+		// 获取支付渠道列表
+		function getPayType() {
+			$.ajax({
+				type: 'get',
+				url: `${basicURL}/wallet/fund/GetVisitorPayChannelList?terminal_type=3`,
+				dataType: 'json',
+				contentType: 'application/json;charset=utf-8',
+				processData: false,
+				beforeSend: function (request) {
+					request.setRequestHeader("App-Key", AppKey);
+					request.setRequestHeader("Servicer-ID", ServicerId);
+					request.setRequestHeader("Bundle-ID", "com.awtio.h5");
+					request.setRequestHeader("Version", "1.0");
+					// request.setRequestHeader("Channel-ID", channelCode);
+				},
+				success: function (res) {
+					if (res && res.code == 200) {
+						checkData = res.data[0];
+						res.data.map((item, index) => {
+							if (item.pay_method != 2) {
+								var aLi = document.createElement('li');
+								aLi.className = "pay_li";
+								aLi.innerHTML = `<img src="./static/images/radio.png" alt="" class="radio" /><img src="${item.icon}" alt="" class="pay_pic" /><span class="pay_li_text">${item.channel_name}</span>`
+
+								aLi.onclick = function () {
+									// 选择支付方式前清空选择单选按钮
+									var imgDom = document.getElementsByClassName('radio');
+									for (var i = 0; i < imgDom.length; i++) {
+										imgDom[i].setAttribute('src', './static/images/radio.png')
+									}
+									//赋值当前选择的支付方式
+									checkData = item;
+									aLi.getElementsByClassName('radio')[0].setAttribute('src', './static/images/radio_check.png')
+								}
+								payUl.appendChild(aLi);
+								document.getElementsByClassName('radio')[0].setAttribute('src', './static/images/radio_check.png')
+							}
+						})
+					} else {
+						layer.msg(res.detail || '请求服务器错误')
+					}
+				},
+				error: function () {
+					layer.msg('请求服务器错误')
+				},
+			})
+		}
+
+		getPayType();
+
+		//点击确定
+		$('.btn_yes').click(function () {
+			$(".popup").css("display", "none");
+			$(".payPopup").css("display", "none");
+			if (checkData == undefined) {
+				layer.msg('请选择支付方式');
+				return;
+			}
+			createOrder();
+
+		})
+
+		// 创建订单
+		function createOrder() {
+			var date = (new Date(timeVal)).getTime() / 1000;
+			$.ajax({
+				type: 'post',
+				url: `${basicURL}/marketing/ticket/Apply`,
+				dataType: 'json',
+				contentType: 'application/json;charset=utf-8',
+				processData: false,
+				data: JSON.stringify({
+					"mobile": phoneval,
+					"name": nameVal,
+					"code": "952700",
+					"assort": 1,
+					"number": planeval,
+					"start_time": date + '',
+					"address": attrval,
+					"period": 191221
+				}),
+				beforeSend: function (request) {
+					request.setRequestHeader("App-Key", AppKey);
+					request.setRequestHeader("Servicer-ID", ServicerId);
+					request.setRequestHeader("Bundle-ID", "com.awtio.h5");
+					request.setRequestHeader("Version", "1.0");
+					// request.setRequestHeader("Channel-ID", channelCode);
+				},
+				success: function (res) {
+					if (res && res.code == 200) {
+
+						visitorUnifiedOrder(res.data.order_number, checkData)
+					} else {
+						layer.msg(res.detail || '请求服务器错误')
+					}
+				},
+				error: function () {
+					layer.msg('请求服务器错误')
+				},
+			})
+		}
+
+		// 创建游客支付请求
+		function visitorUnifiedOrder(id, data) {
+			console.log(id, data, window.location.href)
+			$.ajax({
+				type: 'post',
+				url: `${basicURL}/wallet/fund/VisitorUnifiedOrder`,
+				dataType: 'json',
+				contentType: 'application/json;charset=utf-8',
+				processData: false,
+				data: JSON.stringify({
+					"channel_id": data._id,
+					"goods_id": id,
+					"goods_amount": 1,
+					"payment_type": 3,
+					"return_url": window.location.href
+				}),
+				beforeSend: function (request) {
+					request.setRequestHeader("App-Key", AppKey);
+					request.setRequestHeader("Servicer-ID", ServicerId);
+					request.setRequestHeader("Bundle-ID", "com.awtio.h5");
+					request.setRequestHeader("Version", "1.0");
+					// request.setRequestHeader("Channel-ID", channelCode);
+				},
+				success: function (res) {
+					if (res && res.code == 200) {
+						window.location.href = res.data.data;
+						localStorage.setItem('orderNum', res.data.order_number)
+						// getPayStatus(res.data.order_number)
+					} else {
+						layer.msg(res.detail || '请求服务器错误')
+					}
+				},
+				error: function () {
+					layer.msg('请求服务器错误')
+				},
+			})
+		}
+
+		// 获取支付状态
+		function getPayStatus(orderNum) {
+			console.log(localStorage.getItem('orderNum'))
+			if (localStorage.getItem('orderNum') != null) {
+				$.ajax({
+					type: 'get',
+					url: `${basicURL}/wallet/fund/GetUnifiedStatus?id=${localStorage.getItem('orderNum')}`,
+					dataType: 'json',
+					contentType: 'application/json;charset=utf-8',
+					processData: false,
+					beforeSend: function (request) {
+						request.setRequestHeader("App-Key", AppKey);
+						request.setRequestHeader("Servicer-ID", ServicerId);
+						request.setRequestHeader("Bundle-ID", "com.awtio.h5");
+						request.setRequestHeader("Version", "1.0");
+						// request.setRequestHeader("Channel-ID", channelCode);
+					},
+					success: function (res) {
+						if (res && res.code == 200) {
+							if (res.data.status == 2) {
+								window.location.href = './success.html';
+							} else if (res.data.status == 1) {
+								layer.msg('支付未完成')
+							}
+						} else {
+							layer.msg(res.detail || '请求服务器错误')
+						}
+						localStorage.removeItem('orderNum')
+					},
+					error: function () {
+						localStorage.removeItem('orderNum')
+						layer.msg('请求服务器错误')
+					},
+				})
+			}
+		}
+
+		getPayStatus();
+
+		//获取门票数
+		window.onload = function () {
+			$.ajax({
+				type: 'get',
+				url: `${basicURL}/marketing/ticket/GetNum`,
+				dataType: 'json',
+				contentType: 'application/json;charset=utf-8',
+				processData: false,
+				beforeSend: function (request) {
+					request.setRequestHeader("App-Key", AppKey);
+					request.setRequestHeader("Servicer-ID", ServicerId);
+					request.setRequestHeader("Bundle-ID", "com.awtio.h5");
+					request.setRequestHeader("Version", "1.0");
+					// request.setRequestHeader("Channel-ID", channelCode);
+				},
+				success: function (res) {
+					if (res && res.code == 200) {
+						$('.infoCount').html(res.data.num)
+					} else {
+						layer.msg(res.detail || '请求服务器错误')
+					}
+
+				},
+				error: function () {
+					layer.msg('请求服务器错误')
+				},
+			})
+		}
+
+		// 验证手机号
+		function checkMobile(mobile) {
+			var regexp = /^(((1[3456789]{1}))+\d{9})$/;
+			if (regexp.test(mobile)) {
+				return true;
+			}
+			return false;
+		}
+
+		function getParams(name) {
+			var query = window.location.search.substring(1);
+			var vars = query.split("&");
+			for (var i = 0; i < vars.length; i++) {
+				var pair = vars[i].split("=");
+				if (pair[0] === name) {
+					return pair[1]
+				}
+			}
+			return null;
+		}
+	</script>
+
+</body>
+
+</html>

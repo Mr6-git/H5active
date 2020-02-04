@@ -1,0 +1,12 @@
+@import '../resource/css/mixin.scss';
+
+.TabBar {
+	position: fixed;
+	bottom: 0;
+	width: px2rem(550px);
+}
+
+.tabPic {
+	width: px2rem(35px);
+	height: px2rem(35px);
+}

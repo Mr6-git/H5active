@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no,width=device-width">
+	<meta http-equiv="X-UA-Compatible" content="注册领取20元红包">
+	<title>锦鲤下载</title>
+
+	<script src="./static/js/taro.js"></script>
+	<script src="./static/js/jquery-3.4.1.min.js"></script>
+	<script src="./static/layer/layer.js"></script>
+	<!-- <script src="./static/js/clipboard.min.js"></script> -->
+	<style>
+		* {
+			padding: 0;
+			margin: 0;
+		}
+
+		html,
+		body {
+			line-height: 1.5;
+			color: #333;
+			font-size: 0.7rem;
+			-webkit-overflow-scrolling: touch;
+			padding: 0;
+			margin: 0;
+			font-family: '微软雅黑'
+		}
+
+		li,
+		ol,
+		ul {
+			list-style: none;
+		}
+
+		img,
+		input,
+		select,
+		textarea {
+			border: none;
+			vertical-align: middle;
+		}
+
+		input:-ms-input-placeholder {
+			color: #616ED6;
+		}
+
+		input::-webkit-input-placeholder {
+			color: #616ED6;
+		}
+
+		input,
+		select,
+		textarea {
+			outline: none;
+			border: 0;
+			color: #666;
+			background: 0 0;
+		}
+
+		.main {
+			position: relative;
+			overflow-x: hidden;
+			width: 550px;
+			margin: 0 auto;
+			/* background: url(./static/images/bg.png);
+			background-size: cover;
+			background-repeat: no-repeat; */
+			min-height: 100vh
+		}
+
+		.bg {
+			width: 550px;
+		}
+
+		.bg_1 {
+			height: 533px;
+		}
+
+		.bg_2 {
+			height: 605px;
+		}
+
+		.bg_3 {
+			height: 650px;
+		}
+
+		.bg_4 {
+			height: 650px;
+		}
+
+		.bg_5 {
+			height: 638px;
+		}
+
+		.bg_6 {
+			height: 696px;
+		}
+
+		.bg_7 {
+			height: 102px;
+			cursor: pointer;
+		}
+
+
+		.btn_top {
+			position: absolute;
+			width: 246px;
+			height: 62px;
+			top: 357px;
+			left: 152px;
+			cursor: pointer;
+		}
+	</style>
+
+	<script type="text/javascript" charset="UTF-8" src="//res.cdn.openinstall.io/openinstall.js"></script>
+</head>
+
+<body>
+	<div class="main">
+		<div class="btn_top"></div>
+		<img src="./static/images/bg_1.jpg" alt="" class="bg bg_1" />
+		<img src="./static/images/bg_2.jpg" alt="" class="bg bg_2" />
+		<img src="./static/images/bg_3.jpg" alt="" class="bg bg_3" />
+		<img src="./static/images/bg_4.jpg" alt="" class="bg bg_4" />
+		<img src="./static/images/bg_5.jpg" alt="" class="bg bg_5" />
+		<img src="./static/images/bg_6.jpg" alt="" class="bg bg_6" />
+		<img src="./static/images/btn.jpg" alt="" class="bg bg_7" />
+	</div>
+	<script>
+		var u = navigator.userAgent;
+		var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; // android终端
+		var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); // ios终端
+		var data = OpenInstall.parseUrlParams();
+		var oI = new OpenInstall({
+			appKey: "lwvujj",
+			preferWakeup: true
+		}, data);
+
+		$('.btn_top').click(function () {
+			downLoadApp();
+		})
+
+		$('.bg_7').click(function () {
+			downLoadApp();
+		})
+
+		function downLoadApp() {
+			if (isAndroid) {
+				oI.schemeWakeup();
+				oI.wakeupOrInstall();
+			}
+			else if (isiOS) {
+				window.location.href = 'https://www.jinlibet.com/dl/ios/'
+			}
+		}
+	</script>
+</body>
+
+</html>

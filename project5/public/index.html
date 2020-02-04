@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="description" content="锦鲤电竞送福利啦～斗鱼鱼翅免费抽！记得添加客服微信领奖哦～">
+    <meta name="theme-color" content="#000000" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge chrome=1">
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <title>锦鲤电竞</title>
+    <script>
+        var userAgent = navigator.userAgent;
+        var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1;
+        if(isIE && !((userAgent.indexOf("MSIE 10.0") > -1) || (userAgent.indexOf("MSIE 9.0") > -1))) {
+          window.location.href = 'https://jinlibet.com/upbrower';
+        }
+    </script>
+    <script src="%PUBLIC_URL%/js/flexible_wy.js"></script>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <div id="modal-root"></div>
+  </body>
+</html>
